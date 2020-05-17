@@ -10,6 +10,14 @@ use PHPUnit\Framework\TestCase;
 
 class AvaliadorTest extends TestCase
 {
+
+    private Avaliador $leiloeiro;
+
+    protected function setUp(): void
+    {
+        $this->leiloeiro = new Avaliador();
+    }
+
     /**
      * @dataProvider leilaoEmOrdemAleatorio
      * @dataProvider leilaoEmOrdemCrescente
@@ -18,10 +26,9 @@ class AvaliadorTest extends TestCase
      */
     public function testAvaliadorDeveEncontrarOMaiorValorDeLances(Leilao $leilao)
     {
-        $leiloeiro = new Avaliador();
-        $leiloeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
-        $maiorValor = $leiloeiro->getMaiorValor();
+        $maiorValor = $this->leiloeiro->getMaiorValor();
 
         $this->assertEquals(2500.0, $maiorValor);
     }
@@ -34,10 +41,9 @@ class AvaliadorTest extends TestCase
      */
     public function testAvaliadorDeveEncontrarOMenorValorDeLancesEmOrdemCrescente(Leilao $leilao)
     {
-        $leiloeiro = new Avaliador();
-        $leiloeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
-        $menorValor = $leiloeiro->getMenorValor();
+        $menorValor = $this->leiloeiro->getMenorValor();
 
         $this->assertEquals(1000.0, $menorValor);
     }
@@ -50,11 +56,10 @@ class AvaliadorTest extends TestCase
      */
     public function testAvaliadorDeveBuscar3MaioresValores(Leilao $leilao)
     {
-        $leioeiro = new Avaliador();
-        $leioeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
         /** @var Lance[] $maioresLances */
-        $maioresLances = $leioeiro->getMaioresLances();
+        $maioresLances = $this->leiloeiro->getMaioresLances();
 
         $this->assertCount(3, $maioresLances);
         $this->assertEquals(2500, $maioresLances[0]->getValor());
