@@ -35,6 +35,7 @@ class AvaliadorTest extends TestCase
         // Assert - Then
         $this->assertEquals(2500.0, $maiorValor);
     }
+
     public function testAvaliadorDeveEncontrarOMaiorValorDeLancesEmOrdemDecrescente()
     {
         // Arrumo a casa para o test
@@ -58,6 +59,57 @@ class AvaliadorTest extends TestCase
         // Verifico se a saída é a esperada
         // Assert - Then
         $this->assertEquals(2500.0, $maiorValor);
+    }
+
+
+    public function testAvaliadorDeveEncontrarOMenorValorDeLancesEmOrdemCrescente()
+    {
+        // Arrumo a casa para o test
+        // Arrange - Given
+        $leilao = new Leilao('Fiat 147 0Km');
+
+        $maria = new Usuario('Maria');
+        $joao = new Usuario('João');
+
+        $leilao->recebeLance(new Lance($joao, 2000));
+        $leilao->recebeLance(new Lance($maria, 2500));
+
+        $leiloeiro = new Avaliador();
+
+        // Executo código a ser testado
+        // Act - When
+        $leiloeiro->avalia($leilao);
+
+        $menorValor = $leiloeiro->getMenorValor();
+
+        // Verifico se a saída é a esperada
+        // Assert - Then
+        $this->assertEquals(2000.0, $menorValor);
+    }
+
+    public function testAvaliadorDeveEncontrarOMenorValorDeLancesEmOrdemDecrescente()
+    {
+        // Arrumo a casa para o test
+        // Arrange - Given
+        $leilao = new Leilao('Fiat 147 0Km');
+
+        $maria = new Usuario('Maria');
+        $joao = new Usuario('João');
+
+        $leilao->recebeLance(new Lance($maria, 2500));
+        $leilao->recebeLance(new Lance($joao, 2000));
+
+        $leiloeiro = new Avaliador();
+
+        // Executo código a ser testado
+        // Act - When
+        $leiloeiro->avalia($leilao);
+
+        $menorValor = $leiloeiro->getMenorValor();
+
+        // Verifico se a saída é a esperada
+        // Assert - Then
+        $this->assertEquals(2000.0, $menorValor);
     }
 
 }
