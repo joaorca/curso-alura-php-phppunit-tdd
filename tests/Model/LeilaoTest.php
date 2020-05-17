@@ -11,18 +11,21 @@ class LeilaoTest extends TestCase
 {
     public function testLeilaoNaoDeveReceberLancesRepetidos()
     {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Usuário não pode propor 2 lances consecutivos');
+
         $leilao = new Leilao('Variante');
         $ana = new Usuario('Ana');
 
         $leilao->recebeLance(new Lance($ana, 1000));
         $leilao->recebeLance(new Lance($ana, 1500));
-
-        $this->assertCount(1, $leilao->getLances());
-        $this->assertEquals(1000, $leilao->getLances()[0]->getValor());
     }
 
     public function testLeilaoNaoDeveAceitarMaisDe5LancesPorUsuario()
     {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Usuário não pode propor mais que cinco lances por leilão');
+
         $leiao = new Leilao('Brasília Amarela');
         $joao = new Usuario('João');
         $maria = new Usuario('Maria');
@@ -39,9 +42,6 @@ class LeilaoTest extends TestCase
         $leiao->recebeLance(new Lance($maria, 5500));
         $leiao->recebeLance(new Lance($joao, 6000));
         $leiao->recebeLance(new Lance($maria, 6500));
-
-        $this->assertCount(10, $leiao->getLances());
-        $this->assertEquals(5500, $leiao->getLances()[array_key_last($leiao->getLances())]->getValor());
     }
 
     /**
