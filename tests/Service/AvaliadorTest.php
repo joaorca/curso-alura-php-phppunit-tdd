@@ -67,6 +67,13 @@ class AvaliadorTest extends TestCase
         $this->assertEquals(1500, $maioresLances[2]->getValor());
     }
 
+    public function testLeilaoVazioNaoPodeSerAvaliado()
+    {
+        $leilao = new Leilao('Fusca Azul');
+        $this->leiloeiro->avalia($leilao);
+
+    }
+    
     public function leilaoEmOrdemCrescente()
     {
         $leilao = new Leilao('Fiat 147 0Km');
